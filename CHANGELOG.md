@@ -7,6 +7,10 @@ Which is based on [Keep A Changelog](http://keepachangelog.com/)
 ## [Unreleased]
 
 
+## [3.0.4] - 2019-10-11
+### Changed
+- updated check: `powershell/check-windows-http.ps1` added optional switch parameter `BasicParsing` to provide ability to bypass IE rendering of response and get around Internet Explorer Enhanced Security Configuration /  and trusted sites requirements (@polymorcodeus)
+
 ## [3.0.0] - 2019-03-04
 ### Security
 - updated yard dependency to `~> 0.9.11` per: https://nvd.nist.gov/vuln/detail/CVE-2017-17042 (@majormoses)

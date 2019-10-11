@@ -15,8 +15,10 @@
 #
 # USAGE:
 #   Powershell.exe -NonInteractive -NoProfile -ExecutionPolicy Bypass -NoLogo -File C:\\etc\\sensu\\plugins\\check-windows-http.ps1 https://google.com
+#   Powershell.exe -ExecutionPolicy Bypass check-windows-http.ps1 https://google.com -BasicParsing
 #
 # NOTES:
+#    Use switch '-BasicParsing' to ignore IE rendering of response - invalid or blocked rendering may cause false Critical for check.
 #
 # LICENSE:
 #   Copyright 2016 sensu-plugins
@@ -26,14 +28,16 @@
 [CmdletBinding()]
 Param(
   [Parameter(Mandatory=$True,Position=1)]
-   [string]$CheckAddress
+   [string]$CheckAddress,
+  [Parameter(Mandatory=$False,Position=2)]
+   [switch]$BasicParsing
 )
 
 $ThisProcess = Get-Process -Id $pid
 $ThisProcess.PriorityClass = "BelowNormal"
 
 try {
-  $Available = Invoke-WebRequest $CheckAddress -ErrorAction SilentlyContinue
+  $Available = Invoke-WebRequest $CheckAddress -ErrorAction SilentlyContinue -UseBasicParsing:$BasicParsing
 }
 
 catch {
